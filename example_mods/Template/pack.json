@@ -1,6 +1,0 @@
-{
-	"name": "Template",
-	"description": "Includes a song and a FunkScript template script",
-	"restart":false,
-	"color": [170, 0, 255]
-}

@@ -267,7 +267,7 @@ class StoryMenuState extends MusicBeatState
 			PlayState.campaignMisses = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				LoadingState.loadAndSwitchState(new CharacterSelectState(), true);
+				LoadingState.loadAndSwitchState(new PlayState(), true);
 			});
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));

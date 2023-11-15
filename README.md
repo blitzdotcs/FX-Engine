@@ -1,5 +1,3 @@
-### THIS IS ON HOLD UNTIL I DECIDE TO FINISH IT
-
 # FX Engine
 
 This is the repository for FX Engine. A modification of a game that was originally made for Ludum Dare 47 "Stuck In a Loop".
@@ -15,7 +13,7 @@ This is the repository for FX Engine. A modification of a game that was original
 - Ghost Tapping
 - Custom Controls!
 - Working settings menu
-- Psych Modding Support!
+- W.i.p. Modding support without source
 - Character Selection!
 - Icon bopping!
 - Custom Credits Menu
@@ -24,23 +22,24 @@ This is the repository for FX Engine. A modification of a game that was original
 - And more!
 
 # FX Engine Main Credits
-- [BlitzEX](https://twitter.com/BlitzEXlmao) - Main FX Engine Programmer
-- [TyDev](https://twitter.com/TyDev_) - Original Main FX Engine Programmer
+
+- [TyDev](https://twitter.com/TyDev_) - Main FX Engine Programmer
 - [Chocolate Engine Team](https://github.com/Joalor64GH/Chocolate-Engine) - Better Credits
 - [Funkin' Crew](https://github.com/FunkinCrew/) - Original Game Devs
 - [Kade Engine Team](https://github.com/KadeDev/Kade-Engine) - I Stole some code
-- [Psych Engine Team](https://github.com/ShadowMario/FNF-PsychEngine/) - I stole some code + modding system :3
-- [EliteMasterEric](https://github.com/EliteMasterEric) - Modcore (used in older versions of FX Engine)
+- [Psych Engine Team](https://github.com/ShadowMario/FNF-PsychEngine/) - I stole some code
+- [EliteMasterEric](https://github.com/EliteMasterEric) - Modding System and Modcore
 - FNF Restored Team - Dialogue code and assets
 - OS Engine Devs - Icon bops and TitleState bg thing
+- Bob Mod Team - Run (Used as the KE chart test)
 
 ### Build instructions
 
 ## Installing the Required Programs
 
 First, you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple). 
-1. [Install Haxe 4.2.5](https://haxe.org/download/version/4.2.5/) (or latest)
-2. [Install HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) - Do this after downloading Haxe
+1. [Install Haxe 4.2.0](https://haxe.org/download/version/4.2.0/) (Any ver should work but I use 4.2.0)
+2. [Install HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) after downloading Haxe
 3. Look at the shit that's in the workflow lmao
 
 You should have everything ready for compiling the game! Follow the guide below to continue!

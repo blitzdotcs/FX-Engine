@@ -49,11 +49,12 @@
 
 	<!-- FX ENGINE CUSTOMIZATION -->
 	<define name="CRASH_HANDLER" if="desktop" />
-	<define name="MODS_ALLOWED" if="desktop" />
-	<define name="VIDEOS_ALLOWED" if="desktop" />
-	<define name="WEBM_ENABLED" if="android" /> <!-- Set to android for now bc idek if this works -->
+	<define name="MODS_ALLOWED" unless="web" />
+	<define name="LUA_ALLOWED" if="windows" />
+	<!-- DONT ENABLE THIS IF UR MAKING A CUSTOM BUILD -->
+	<define name="CHECK_FOR_UPDATES" if="fxrelease"/>
 
-	<assets path='example_mods' rename='mods' embed='false'/>
+	<assets path='example_mods' rename='mods' embed='false' if="MODS_ALLOWED"/>
 	<assets path="plugins/" rename='' if="windows"/>
 	<assets path="dlls/" rename='' if="windows"/>
 
@@ -123,13 +124,15 @@
 
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript-improved" />
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
+	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="faxe" if='switch'/>
+	<!-- haxelib name= "polymod-enigma" rename="polymod" if="desktop" /--> <!-- USE https://github.com/EnigmaEngine/polymod -->
 	<haxelib name="discord_rpc" if="windows"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
+	<--haxelib name="extension-webm" if="desktop"/>
 
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
@@ -165,9 +168,6 @@
 
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
-
-	<!-- FunkScript defines :troll: -->
-	<haxedef name="hscriptPos" />
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />

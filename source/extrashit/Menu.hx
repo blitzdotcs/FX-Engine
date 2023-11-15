@@ -16,7 +16,7 @@ class Menu extends MusicBeatState
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Mod Selection', 'Mod Configuration', /*'Mod Chart Editor',*/ 'exit'];
+	var menuItems:Array<String> = ['Mod Selection', 'Mod Configuration', 'exit'];
 
 	var notice:FlxText;
 
@@ -62,9 +62,7 @@ class Menu extends MusicBeatState
 				case "Mod Selection":
                     FlxG.switchState(new ModsMenuState());					
 				case "Mod Configuration":
-                    FlxG.switchState(new psych.MasterEditorMenu());	
-			//	case "Mod Chart Editor":
-			//		FlxG.switchState(new modcharting.ModchartEditorState());			 
+                    FlxG.switchState(new psych.MasterEditorMenu());			 
 				case "exit":
 					FlxG.switchState(new MainMenuState());
 			}

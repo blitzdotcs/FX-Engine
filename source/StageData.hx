@@ -45,9 +45,6 @@ class StageData {
 					stage = 'school';
 				case 'thorns':
 					stage = 'schoolEvil';
-				case 'ugh' | 'guns' | 'stress':
-				// woab old ugh reference, anyways this is temporary
-					stage = 'philly';					
 				default:
 					stage = 'stage';
 			}

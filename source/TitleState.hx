@@ -171,6 +171,11 @@ class TitleState extends MusicBeatState
 
 			transIn = FlxTransitionableState.defaultTransIn;
 			transOut = FlxTransitionableState.defaultTransOut;
+			
+			var music:FlxSound = new FlxSound();
+			music.loadStream(Paths.music('klaskiiLoop'));
+			FlxG.sound.list.add(music);
+			music.play();
 		}
 
 		Conductor.changeBPM(158);

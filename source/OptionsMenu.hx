@@ -22,7 +22,6 @@ class OptionsMenu extends MusicBeatState
 		new OptionCatagory("Gameplay", [
 			new ZXNMOption(controls),
 			new PosBarOption("Song position barr"),
-			new DialOption("StoryMode Dialogue Toggle"),
 			new BotPlayOption("Omg ur bad lel")
 		]),
 		new OptionCatagory("Appearence", [

@@ -293,6 +293,15 @@ class FreeplayState extends MusicBeatState
 		{
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			/*#if MODS_ALLOWED
+			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
+			#else
+			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
+			#end
+				poop = songLowercase;
+				curDifficulty = 1;
+				trace('Couldnt find file');
+			}*/
 			trace(poop);
 
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
@@ -307,7 +316,7 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT){
 				FlxG.switchState(new ChartingState());
 			}else{
-				LoadingState.loadAndSwitchState(new CharacterSelectState());
+				LoadingState.loadAndSwitchState(new PlayState());
 			}
 
 			FlxG.sound.music.volume = 0;

@@ -111,10 +111,6 @@ class ChartingState extends MusicBeatState
 	private var blockPressWhileScrolling:Array<FlxUIDropDownMenuCustom> = [];
 	var selectedEvent:Int = 0;
 
-	// LITTLE GUYS I LOVE THEM, CREDITS TO FPS PLUSS :DDDD
-	var lilStage:FlxSprite;
-	var lilBf:FlxSprite;
-	var lilOpp:FlxSprite;
 
 	override function create()
 	{
@@ -141,44 +137,6 @@ class ChartingState extends MusicBeatState
 
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
-
-		// LITTLE GUYS I LOVE THEM, CREDITS TO FPS PLUSS :DDDD
-		lilStage = new FlxSprite(32, 432).loadGraphic(Paths.image("chartEditor/lilStage"));
-		lilStage.scrollFactor.set();
-		add(lilStage);
-
-		lilBf = new FlxSprite(32, 432).loadGraphic(Paths.image("chartEditor/lilBf"), true, 300, 256);
-		lilBf.animation.add("idle", [0, 1], 12, true);
-		lilBf.animation.add("0", [3, 4, 5], 12, false);
-		lilBf.animation.add("1", [6, 7, 8], 12, false);
-		lilBf.animation.add("2", [9, 10, 11], 12, false);
-		lilBf.animation.add("3", [12, 13, 14], 12, false);
-		lilBf.animation.add("yeah", [17, 20, 23], 12, false);
-		lilBf.animation.play("idle");
-		lilBf.animation.finishCallback = function(name:String){
-			lilBf.animation.play(name, true, false, lilBf.animation.getByName(name).numFrames - 2);
-		}
-		lilBf.scrollFactor.set();
-		add(lilBf);
-
-		lilOpp = new FlxSprite(32, 432).loadGraphic(Paths.image("chartEditor/lilOpp"), true, 300, 256);
-		lilOpp.animation.add("idle", [0, 1], 12, true);
-		lilOpp.animation.add("0", [3, 4, 5], 12, false);
-		lilOpp.animation.add("1", [6, 7, 8], 12, false);
-		lilOpp.animation.add("2", [9, 10, 11], 12, false);
-		lilOpp.animation.add("3", [12, 13, 14], 12, false);
-		lilOpp.animation.play("idle");
-		lilOpp.animation.finishCallback = function(name:String){
-			lilOpp.animation.play(name, true, false, lilOpp.animation.getByName(name).numFrames - 2);
-		}
-		lilOpp.scrollFactor.set();
-		add(lilOpp);
-
-		lilBf.visible = true;
-		lilOpp.visible = true;
-		lilStage.visible = true;
-
-		// End of Little Guys :(
 
 		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + gridBG.width / 2).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
 		add(gridBlackLine);
@@ -923,17 +881,11 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.sound.music.pause();
 					vocals.pause();
-
-					lilBf.animation.curAnim.curFrame = 0;
-					lilOpp.animation.curAnim.curFrame = 0;					
 				}
 				else
 				{
 					vocals.play();
 					FlxG.sound.music.play();
-
-					lilBf.animation.curAnim.curFrame = 0;
-					lilOpp.animation.curAnim.curFrame = 0;					
 				}
 			}
 
@@ -995,6 +947,11 @@ class ChartingState extends MusicBeatState
 		}
 
 		_song.bpm = tempBpm;
+
+		/* if (FlxG.keys.justPressed.UP)
+				Conductor.changeBPM(Conductor.bpm + 1);
+			if (FlxG.keys.justPressed.DOWN)
+				Conductor.changeBPM(Conductor.bpm - 1); */
 
 		bpmTxt.text = bpmTxt.text = Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2))
 			+ " / "

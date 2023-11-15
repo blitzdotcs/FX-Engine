@@ -12,6 +12,12 @@ class HealthIcon extends FlxSprite
 	private var isPlayer:Bool = false;
 	private var char:String = '';
 
+	// This is made for allowing these icons to be used without having their suffix deleted
+	var ignoreSplit:Array<String> = ['bf-pixel', 'bf-old'];
+
+	// The following icons have antialiasing forced to be disabled
+	var noAntialiasing:Array<String> = ['bf-pixel', 'senpai', 'spirit'];
+
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
@@ -34,45 +40,30 @@ class HealthIcon extends FlxSprite
 		else changeIcon('bf');
 	}
 
-	private var iconOffsets:Array<Float> = [0, 0, 0];
 	public function changeIcon(char:String) {
+		var doSplit:Bool = true;
+		for (i in 0...ignoreSplit.length) {
+			if(char == ignoreSplit[i]) {
+				doSplit = false;
+				break;
+			}
+		}
+
+		if(doSplit) {
+			char = (char.split('-')[0]).trim();
+		}
+
 		if(this.char != char) {
 			var name:String = 'icons/' + char;
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-' + char; //Older versions of psych engine's support
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
-			var file:Dynamic = Paths.image(name);
+			var file:Dynamic = Paths.loadImage(name);
 
-			loadGraphic(file); //Load stupidly first for getting the file size
-			var width2 = width;
-			if (width == 450) {
-				loadGraphic(file, true, Math.floor(width / 3), Math.floor(height)); //Then load it fr // winning icons go br
-				iconOffsets[0] = (width - 150) / 3;
-				iconOffsets[1] = (width - 150) / 3;
-				iconOffsets[2] = (width - 150) / 3;
-			} else {
-				loadGraphic(file, true, Math.floor(width / 2), Math.floor(height)); //Then load it fr // winning icons go br
-				iconOffsets[0] = (width - 150) / 2;
-				iconOffsets[1] = (width - 150) / 2;
-			}
-			
-			updateHitbox();
-			if (width2 == 450) {
-				animation.add(char, [0, 1, 2], 0, false, isPlayer);
-			} else {
-				animation.add(char, [0, 1], 0, false, isPlayer);
-			}
+			loadGraphic(file, true, 150, 150);
+			animation.add(char, [0, 1], 0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
-
-			antialiasing = false; // Will turn back on but for neow it's off
 		}
-	}
-
-	override function updateHitbox()
-	{
-		super.updateHitbox();
-		offset.x = iconOffsets[0];
-		offset.y = iconOffsets[1];
 	}
 
 	public function getCharacter():String {

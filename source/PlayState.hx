@@ -51,10 +51,6 @@ import openfl.filters.ShaderFilter;
 import sys.FileSystem;
 import sys.io.File;
 #end
-import modcharting.ModchartFuncs;
-import modcharting.NoteMovement;
-import modcharting.PlayfieldRenderer;
-import funkscript.FunkScript;
 
 using StringTools;
 
@@ -77,6 +73,7 @@ class PlayState extends MusicBeatState
 	public static var changedDifficulty:Bool = false;
 	public static var selectedBF:String = 'bf';
 	public static var freeplayChar:Bool = false;
+	public static var instance:PlayState;
 	public static var seenCutscene:Bool = false;
 
 	public static var hasPlayedOnce:Bool = false;
@@ -92,9 +89,6 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
-
-	// ModchartFuncs shit
-	public static var instance:PlayState;
 
 	private var vocals:FlxSound;
 
@@ -198,15 +192,24 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	var script = new SongScript();
+	override function add(object:FlxBasic):FlxBasic
+	{
+		if (Reflect.hasField(object, "antialiasing"))
+		{
+			Reflect.setField(object, "antialiasing", false);
+		}
+
+		return super.add(object);
+	}
+
+    // API stuff
+	public function addObject(object:FlxBasic) { add(object); }
+	public function removeObject(object:FlxBasic) { remove(object); }
 
 	override public function create()
 	{
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
-
-	//	script.loadScript(SONG.song.toLowerCase());
-	//	script.call('create', []);
 
 		#if desktop
 		// Making difficulty text for Discord Rich Presence.
@@ -279,7 +282,6 @@ class PlayState extends MusicBeatState
 
 		foregroundSprites = new FlxTypedGroup<BGSprite>();
 		if (FlxG.save.data.dialogue)
-		{	
 			switch (SONG.song.toLowerCase())
             {
 				case 'tutorial':
@@ -317,9 +319,10 @@ class PlayState extends MusicBeatState
 				case 'roses':
 					dialogue = CoolUtil.coolTextFile(Paths.txt('data/songs/roses/rosesDialogue'));
 				case 'thorns':
-					dialogue = CoolUtil.coolTextFile(Paths.txt('data/songs/thorns/thornsDialogue'));									
+					dialogue = CoolUtil.coolTextFile(Paths.txt('data/songs/thorns/thornsDialogue'));
+				case 'run':
+					dialogue = CoolUtil.coolTextFile(Paths.txt('data/songs/run/DumbDialogPhloxMade'));										
 			}
-		}	
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
@@ -901,10 +904,6 @@ class PlayState extends MusicBeatState
 
 		generateSong(SONG.song);
 
-  		playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
-  		playfieldRenderer.cameras = [camHUD];
-  		add(playfieldRenderer);
-
 		// add(strumLine);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -997,7 +996,6 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];		
 		doof.cameras = [camHUD];
-		notecomboSpritelol.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1161,8 +1159,6 @@ class PlayState extends MusicBeatState
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
-  		NoteMovement.getDefaultStrumPos(this);
-
 		talking = false;
 		startedCountdown = true;
 		Conductor.songPosition = 0;
@@ -1282,7 +1278,7 @@ class PlayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ")", "Score: " + songScore + " | Misses: " + misses  , iconRPC);
-		#end	
+		#end
 	}
 
 	function updateLoop()
@@ -1690,8 +1686,6 @@ class PlayState extends MusicBeatState
         	}
     	}
 
-	//	script.call('update', [elapsed]);
-
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
@@ -1777,10 +1771,10 @@ class PlayState extends MusicBeatState
 				FlxG.switchState(new GitarooPause());
 			}
 			else
-			// chance of getting "crash handler" menu lol
-			if (FlxG.random.bool(5.0))
+			if (FlxG.random.bool(1.0))
 			{
-				FlxG.switchState(new CrashHandler(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				// gitaroo man easter egg
+				FlxG.switchState(new FumoGameOver());
 			}
 			else			
 			{
@@ -1831,32 +1825,18 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
-		if (iconP1.animation.frames == 3) {
-			if (healthBar.percent < 20)
-				iconP1.animation.curAnim.curFrame = 1;
-			else if (healthBar.percent >80)
-				iconP1.animation.curAnim.curFrame = 2;
-			else
-				iconP1.animation.curAnim.curFrame = 0;
-		} else {
-			if (healthBar.percent < 20)
-				iconP1.animation.curAnim.curFrame = 1;
-			else
-				iconP1.animation.curAnim.curFrame = 0;
-		}
-		if (iconP2.animation.frames == 3) {
-			if (healthBar.percent > 80)
-				iconP2.animation.curAnim.curFrame = 1;
-			else if (healthBar.percent < 20)
-				iconP2.animation.curAnim.curFrame = 2;
-			else 
-				iconP2.animation.curAnim.curFrame = 0;
-		} else {
-			if (healthBar.percent > 80)
-				iconP2.animation.curAnim.curFrame = 1;
-			else 
-				iconP2.animation.curAnim.curFrame = 0;
-		}
+		if (healthBar.percent < 20)
+			iconP1.animation.curAnim.curFrame = 1;
+		else
+			iconP1.animation.curAnim.curFrame = 0;
+
+		if (healthBar.percent > 80)
+			iconP2.animation.curAnim.curFrame = 1;
+		else
+			iconP2.animation.curAnim.curFrame = 0;
+
+		/* if (FlxG.keys.justPressed.NINE)
+			FlxG.switchState(new Charting()); */
 
 		if (FlxG.keys.justPressed.EIGHT)
 			FlxG.switchState(new AnimationDebug(SONG.player2));
@@ -2022,8 +2002,6 @@ class PlayState extends MusicBeatState
 
 			deathCounter += 1;
 
-		//	script.call('playerDeath', []);
-
 			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
@@ -2085,8 +2063,6 @@ class PlayState extends MusicBeatState
 						if (SONG.notes[Math.floor(curStep / 16)].altAnim)
 							altAnim = '-alt';
 					}
-
-				//	script.call('cpuNoteHit', []);
 
 					switch (Math.abs(daNote.noteData))
 					{
@@ -2234,8 +2210,6 @@ class PlayState extends MusicBeatState
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 			#end
 		}
-
-	//	script.call('songFinish', []);
 
 		if (isStoryMode)
 		{
@@ -2702,8 +2676,6 @@ class PlayState extends MusicBeatState
 			if (health > 0)
 				health -= 0.04;
 
-		//	script.call('noteMiss', []);
-
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
 				gf.playAnim('sad');
@@ -2771,8 +2743,6 @@ class PlayState extends MusicBeatState
 
 	function goodNoteHit(note:Note):Void
 	{
-	//	script.call('noteHit', []);
-
 		if (!note.wasGoodHit)
 		{
 			if (!note.isSustainNote)
@@ -2941,9 +2911,6 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
-	//	script.call('beatHit', [curBeat]);
-
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
