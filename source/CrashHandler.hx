@@ -13,12 +13,13 @@ import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
+#if windows
 import Discord.DiscordClient;
+#end
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 import openfl.Lib;
-import Discord.DiscordClient;
 
 class CrashHandler extends MusicBeatSubstate
 {
@@ -131,7 +132,9 @@ class CrashHandler extends MusicBeatSubstate
 
 		if (controls.ACCEPT)
 		{
+			#if windows
             DiscordClient.shutdown();
+			#end
             Sys.exit(1);
 		}
 
@@ -143,7 +146,7 @@ class CrashHandler extends MusicBeatSubstate
 
 	private function coolStartDeath():Void
 	{
-		// I would do a thing but I'm gay
+		// I would do a thing but I'm lazy
 	}
 
 	override function beatHit()

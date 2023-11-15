@@ -5,7 +5,7 @@ import flixel.input.keyboard.FlxKey;
 import shaders.ScanlineShader;
 import shaders.ChromaticAbberationShader.ChromaticAberrationShader;
 import shaders.VHSShader;
-#if cpp
+#if windows
 import Discord.DiscordClient;
 #end
 import Section.SwagSection;
@@ -85,7 +85,7 @@ class PlayState extends MusicBeatState
 
 	var songLength:Float = 0;
 
-	#if desktop
+	#if windows
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -208,7 +208,7 @@ class PlayState extends MusicBeatState
 	//	script.loadScript(SONG.song.toLowerCase());
 	//	script.call('create', []);
 
-		#if desktop
+		#if windows
 		// Making difficulty text for Discord Rich Presence.
 		switch (storyDifficulty)
 		{
@@ -1279,7 +1279,7 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
-		#if desktop
+		#if windows
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ")", "Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end	
@@ -1287,7 +1287,7 @@ class PlayState extends MusicBeatState
 
 	function updateLoop()
 		{
-			#if desktop
+			#if windows
 			var timer = Timer.delay(function()
 			{
 				if (isStoryMode)
@@ -1577,7 +1577,7 @@ class PlayState extends MusicBeatState
 				vocals.pause();
 			}
 
-			#if desktop
+			#if windows
 			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ")", "Score: " + songScore + " | Misses: " + misses  , iconRPC);
 			#end			
 			if (!startTimer.finished)
@@ -1601,7 +1601,7 @@ class PlayState extends MusicBeatState
 			paused = false;
 
 
-			#if desktop
+			#if windows
 			if (startTimer.finished)
 			{
 				DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ")", "Score: " + songScore + " | Misses: " + misses, iconRPC, true, songLength - Conductor.songPosition);
@@ -1618,7 +1618,7 @@ class PlayState extends MusicBeatState
 
 	override public function onFocus():Void
 	{
-		#if cpp
+		#if windows
 		if (health > 0 && !paused)
 		{
 			if (Conductor.songPosition > 0.0)
@@ -1633,7 +1633,7 @@ class PlayState extends MusicBeatState
 	
 	override public function onFocusLost():Void
 	{
-		#if cpp
+		#if windows
 		if (health > 0 && !paused)
 		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
@@ -1652,7 +1652,7 @@ class PlayState extends MusicBeatState
 		vocals.time = Conductor.songPosition;
 		vocals.play();
 
-		#if desktop
+		#if windows
 		DiscordClient.changePresence(detailsText + " " + SONG.song + " (" + storyDifficultyText + ")", "Score: " + songScore + " | Misses: " + misses  , iconRPC);
 		#end
 	}
@@ -1802,7 +1802,7 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.switchState(new ChartingState());
 
-			#if cpp
+			#if windows
 			DiscordClient.changePresence("In the Chart Editor!", null, null, true);
 			#end
 		}
@@ -2028,8 +2028,8 @@ class PlayState extends MusicBeatState
 
 			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 			
-			#if cpp
-			// Game Over doesn't get his own variable because it's only used here
+			#if windows
+			// Game Over doesn't get it's own variable because it's only used here
 			DiscordClient.changePresence(detailsText, "GAME OVER -- " + SONG.song + " (" + storyDifficultyText + ")\nScore: " + songScore + " | Misses: " + misses  , iconRPC);
 			#end
 		}
