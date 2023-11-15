@@ -1,0 +1,12 @@
+BlitzEX:Main FX Engine Programmer
+TyDev:Original Main FX Engine Programmer
+AD1340:Beta Tester
+Elite Master Eric:Modcore
+Chocolate Engine Team:Modding System + Better Credits
+Funkin' Team:OG Game Devs
+Kade Engine Team:I Stole some code
+Psych Engine Team:Modding system & Char jsons
+FNF Restored Team:Dialogue code and Assets
+OS Engine Devs: Icon bops and TitleState bg thing
+FPS Plus Devs: Silly tiny guys in charting state
+TheZoroForce240: OG FNF ModCharting Tools Creator
