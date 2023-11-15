@@ -1783,7 +1783,7 @@ class PlayState extends MusicBeatState
 
 			var detailsPausedText = "Paused on " + SONG.song;
 
-			#if desktop
+			#if windows
 			detailsPausedText = "Paused - " + detailsText + " " + SONG.song + " "  + songScore;
 			#end
 		}
