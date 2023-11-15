@@ -1,4 +1,6 @@
-### THIS IS ON HOLD UNTIL I DECIDE TO FINISH IT
+# THIS IS THE NEW REPO
+
+* Go [here](https://github.com/blitzdotcs/FX-Engine-Legacy-Repo) for the legacy versions!
 
 # FX Engine
 
