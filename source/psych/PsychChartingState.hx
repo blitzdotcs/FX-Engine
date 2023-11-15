@@ -1,6 +1,6 @@
 package psych;
 
-#if desktop
+#if windows
 import Discord.DiscordClient;
 #end
 import Conductor.BPMChangeEvent;
@@ -142,7 +142,7 @@ class PsychChartingState extends MusicBeatState
 
 	override function create()
 	{
-		#if desktop
+		#if windows
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Chart Editor", StringTools.replace(PlayState.SONG.song, '-', ' '));
 		#end
