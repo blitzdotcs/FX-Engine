@@ -198,15 +198,15 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	var script = new SongScript();
+	var script = new FunkScript();
 
 	override public function create()
 	{
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
-	//	script.loadScript(SONG.song.toLowerCase());
-	//	script.call('create', []);
+		script.loadScript(SONG.song.toLowerCase());
+		script.call('create', []);
 
 		#if windows
 		// Making difficulty text for Discord Rich Presence.
@@ -1680,7 +1680,7 @@ class PlayState extends MusicBeatState
         	}
     	}
 
-	//	script.call('update', [elapsed]);
+		script.call('update', [elapsed]);
 
 		if (FlxG.keys.justPressed.NINE)
 		{
@@ -2012,7 +2012,7 @@ class PlayState extends MusicBeatState
 
 			deathCounter += 1;
 
-		//	script.call('playerDeath', []);
+			script.call('playerDeath', []);
 
 			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -2076,7 +2076,7 @@ class PlayState extends MusicBeatState
 							altAnim = '-alt';
 					}
 
-				//	script.call('cpuNoteHit', []);
+					script.call('cpuNoteHit', []);
 
 					switch (Math.abs(daNote.noteData))
 					{
@@ -2225,7 +2225,7 @@ class PlayState extends MusicBeatState
 			#end
 		}
 
-	//	script.call('songFinish', []);
+		script.call('songFinish', []);
 
 		if (isStoryMode)
 		{
@@ -2692,7 +2692,7 @@ class PlayState extends MusicBeatState
 			if (health > 0)
 				health -= 0.04;
 
-		//	script.call('noteMiss', []);
+			script.call('noteMiss', []);
 
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -2761,7 +2761,7 @@ class PlayState extends MusicBeatState
 
 	function goodNoteHit(note:Note):Void
 	{
-	//	script.call('noteHit', []);
+		script.call('noteHit', []);
 
 		if (!note.wasGoodHit)
 		{
@@ -2932,7 +2932,7 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-	//	script.call('beatHit', [curBeat]);
+		script.call('beatHit', [curBeat]);
 
 		if (generatedMusic)
 		{

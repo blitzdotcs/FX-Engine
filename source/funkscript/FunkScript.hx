@@ -13,7 +13,7 @@ import StringTools;
 import sys.FileSystem;
 #end
 
-class SongScript {
+class FunkScript {
     public var interp = new Interp();
 	public var parser = new Parser();
 	public var script:hscript.Expr;
@@ -66,9 +66,22 @@ class SongScript {
 
 	public function loadScript(file:String)
 	{
-		script = parser.parseString(openfl.Assets.getText(Paths.getSongScript('$file')));
-		interp.execute(script);
+		var scriptPath:String = Paths.getSongScript(file);
+
+		if (Sys.fileExists(scriptPath))
+		{
+			// If the file exists, proceed to load and parse it
+			script = parser.parseString(openfl.Assets.getText(scriptPath));
+			interp.execute(script);
+			trace("Script loaded!");
+		}
+		else
+		{
+			// If no script just trace lol
+			trace("Error: Script file not found - " + scriptPath);
+		}
 	}
+
 
     #if MODS_ALLOWED
 	public function loadModScript(file:String)
