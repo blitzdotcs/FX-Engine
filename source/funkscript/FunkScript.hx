@@ -66,19 +66,19 @@ class FunkScript {
 
 	public function loadScript(file:String)
 	{
-		var scriptPath:String = Paths.getSongScript(file);
+		var shithxpath:String = Paths.getSongScript(file);
 
-		if (sys.FileSystem.exists(scriptPath))
+		if (sys.FileSystem.exists(shithxpath))
 		{
 			// if file exists just cum and load script
-			script = parser.parseString(openfl.Assets.getText(scriptPath));
+			script = parser.parseString(openfl.Assets.getText(shithxpath));
 			interp.execute(script);
 			trace("Script found and loaded!");
 		}
 		else
 		{
 			// If no script just trace lol
-			trace("Error: Script file not found - " + scriptPath);
+			trace("Error: Script file not found - " + shithxpath);
 		}
 	}
 
@@ -86,18 +86,19 @@ class FunkScript {
     #if MODS_ALLOWED
 	public function loadModScript(file:String)
     {
-		var scriptPath:String = Paths.getmodSongScript(file);
-		if (sys.FileSystem.exists(scriptPath))
+		var shithxpath:String = Paths.getmodSongScript(file);
+		if (sys.FileSystem.exists(shithxpath))
 		{
 			// if file exists just cum and load script
-			script = parser.parseString(openfl.Assets.getText(scriptPath));
+			script = parser.parseString(openfl.Assets.getText(shithxpath));
 			interp.execute(script);
 			trace("Script found and loaded!");
 		}
 		else
 		{
 			// If no script just trace lol
-			trace("Error: Script file not found - " + scriptPath);
+			// Update: Seems like this causes a crash gotta make a work around
+			trace("Error: Script file not found - " + shithxpath);
 		}
     }
     #end    
