@@ -68,12 +68,12 @@ class FunkScript {
 	{
 		var scriptPath:String = Paths.getSongScript(file);
 
-		if (Sys.fileExists(scriptPath))
+		if (sys.FileSystem.exists(scriptPath))
 		{
-			// If the file exists, proceed to load and parse it
+			// if file exists just cum and load script
 			script = parser.parseString(openfl.Assets.getText(scriptPath));
 			interp.execute(script);
-			trace("Script loaded!");
+			trace("Script found and loaded!");
 		}
 		else
 		{
@@ -86,8 +86,19 @@ class FunkScript {
     #if MODS_ALLOWED
 	public function loadModScript(file:String)
     {
-        script = parser.parseString(openfl.Assets.getText(Paths.getmodSongScript('$file')));
-        interp.execute(script);
+		var scriptPath:String = Paths.getmodSongScript(file);
+		if (sys.FileSystem.exists(scriptPath))
+		{
+			// if file exists just cum and load script
+			script = parser.parseString(openfl.Assets.getText(scriptPath));
+			interp.execute(script);
+			trace("Script found and loaded!");
+		}
+		else
+		{
+			// If no script just trace lol
+			trace("Error: Script file not found - " + scriptPath);
+		}
     }
     #end    
 }
