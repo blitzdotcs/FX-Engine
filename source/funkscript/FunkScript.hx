@@ -77,7 +77,7 @@ class FunkScript {
 		}
 		else
 		{
-			loademptyScript();
+			loademptyScript(SONG.song.toLowerCase());
 			trace("Loading empty script so the game doesn't crash!");
 		}
 	}
@@ -107,7 +107,7 @@ class FunkScript {
 		}
 		else
 		{
-			loademptyScript();
+			loademptyScript(SONG.song.toLowerCase());
 			trace("Loading empty script so the game doesn't crash!");
 		}
     }
