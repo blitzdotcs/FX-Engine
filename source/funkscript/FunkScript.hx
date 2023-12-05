@@ -82,7 +82,7 @@ class FunkScript {
 		}
 	}
 
-	public function loademptyScript()
+	public function loademptyScript(file:String)
 	{
 		var emptyshithxpath:String = Paths.gettempSongScript(file);
 		if (sys.FileSystem.exists(emptyshithxpath))
