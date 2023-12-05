@@ -132,15 +132,16 @@ class Paths
 		return getPath('$key.lua', TEXT, library);
 	}
 
-	inline static public function getScript(key:String, ?library:String)
-	{
-		return getPath('scripts/$key.hx', TEXT, library);
-	}
-
 	public static function getSongScript(song:String) 
 	{
 		trace('Loading scripts for: ' + song);
-		return 'mods/data/$song/Modchart.hx';
+		return 'mods/data/$song/script.hx';
+	}
+
+	public static function gettempSongScript(song:String) 
+	{
+		trace('Loading scripts for: ' + song);
+		return 'mods/data/scriptcrashpreventor/script.hx';
 	}
 
 	static public function video(key:String)
@@ -430,8 +431,7 @@ class Paths
 
 	public static function getmodSongScript(song:String) {
 		trace('Loading custom scripts for: ' + modsSongs);
-		return modFolders('data/$song/Modchart.hx');
-
+		return modFolders('data/$song/script.hx');
 	}
 
 	static public function modFolders(key:String) 

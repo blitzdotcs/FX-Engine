@@ -77,11 +77,22 @@ class FunkScript {
 		}
 		else
 		{
-			// If no script just trace lol
-			trace("Error: Script file not found - " + shithxpath);
+			loademptyScript();
+			trace("Loading empty script so the game doesn't crash!");
 		}
 	}
 
+	public function loademptyScript(file:String)
+	{
+		var emptyshithxpath:String = Paths.gettempSongScript(file);
+		if (sys.FileSystem.exists(emptyshithxpath))
+		{
+			// if file exists just cum and load script
+			script = parser.parseString(openfl.Assets.getText(emptyshithxpath));
+			interp.execute(script);
+		}
+		trace("Loading empty script so the game doesn't crash!");
+	}
 
     #if MODS_ALLOWED
 	public function loadModScript(file:String)
@@ -96,9 +107,8 @@ class FunkScript {
 		}
 		else
 		{
-			// If no script just trace lol
-			// Update: Seems like this causes a crash gotta make a work around
-			trace("Error: Script file not found - " + shithxpath);
+			loademptyScript();
+			trace("Loading empty script so the game doesn't crash!");
 		}
     }
     #end    
