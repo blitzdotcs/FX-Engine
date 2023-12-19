@@ -102,14 +102,14 @@ jobs:
       # Runs a set of commands using the runners shell
 
       - name: Restore Previous Cache
-        id: cache-debug-build-windows-restore
+        id: cache-debug-build-macos-restore
         uses: actions/cache/restore@main
         with:
           path: |
             .haxelib/
-            /export/release/windows/haxe/
-            /export/release/windows/obj/
-          key: cache-windows-build
+            /export/release/macos/haxe/
+            /export/release/macos/obj/
+          key: cache-macos-build
 
       - name: Install Haxelib
         run: |
@@ -163,6 +163,6 @@ jobs:
         with:
           path: |
             .haxelib/
-            /export/release/windows/haxe/
-            /export/release/windows/obj/
+            /export/release/macos/haxe/
+            /export/release/macos/obj/
           key: cache-windows-build                   
